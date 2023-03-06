@@ -1,0 +1,111 @@
+{% extends 'website/layout.html' %}
+
+{% block body %}
+<style>
+    .form_div{
+            padding: 10px 10px;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        }
+    
+</style>
+
+    <div class="form_div">
+        {% if edit_phd %}
+        <form action="{% url 'edit_phd' edit_phd.id %}" method="post">
+            {% csrf_token%}
+        <h1> Edit Patent Published/Awarded</h1>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="details">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Scholor Name</label>
+                        <input type="text" class="form-control" required name="scholor_name" placeholder="Enter the Scholor Name" value="{{edit_phd.scholor_name}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Department Name</label>
+                        <input type="text" class="form-control" required name="department" placeholder="Enter the Department Name" value="{{edit_phd.department}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Date of Registration of Scholor</label>
+                        <input type="date" class="form-control" required name="registration_date">
+                        {{edit_phd.registration_date}}
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Date of Award of Ph.D</label>
+                        <input type="date" class="form-control" required name="award_date">
+                        {{edit_phd.award_date}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="details">
+                    <div class="details">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Title</label>
+                            <textarea type="text" class="form-control" required name="thesis_title" placeholder="Enter the Title of the Patent" rows="2">{{edit_phd.thesis_title}}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name of the guide/s</label>
+                        <textarea type="text" class="form-control" required name="guide_names" placeholder="Enter the Title of the Patent" rows="4">{{edit_phd.guide_names}}</textarea>
+                        <small style="color: red;">* Enter Names of the guided in comma seperated manner</small>
+                    </div>
+                </div>
+            </div>    
+        </div>
+            <div class="submit_button"  style="margin-top: 3%;padding: 3%;">
+                <center><button type="submit" class="btn btn-primary">Submit</button></center>
+            </div>
+        </form>
+        
+        {% else %}
+            <form action="{% url 'phd_awarded'%}" method="post">
+                {% csrf_token%}
+            <h1>Ph.D's Awarded</h1>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="details">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Scholor Name</label>
+                            <input type="text" class="form-control" required name="scholor_name" placeholder="Enter the Scholor Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Department Name</label>
+                            <input type="text" class="form-control" required name="department" placeholder="Enter the Department Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Date of Registration of Scholor</label>
+                            <input type="date" class="form-control" required name="registration_date">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Date of Award of Ph.D</label>
+                            <input type="date" class="form-control" required name="award_date">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="details">
+                        <div class="details">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Title</label>
+                                <textarea type="text" class="form-control" required name="thesis_title" placeholder="Enter the Title of the Patent" rows="2"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Name of the guide/s</label>
+                            <textarea type="text" class="form-control" required name="guide_names" placeholder="Enter the Title of the Patent" rows="4"></textarea>
+                            <small style="color: red;">* Enter Names of the guided in comma seperated manner</small>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+                <div class="submit_button"  style="margin-top: 3%;padding: 3%;">
+                    <center><button type="submit" class="btn btn-primary">Submit</button></center>
+                </div>
+            </form>
+    </div>
+    {% endif %}
+
+{% endblock %}

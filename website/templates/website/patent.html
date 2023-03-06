@@ -1,0 +1,107 @@
+{% extends 'website/layout.html' %}
+
+
+{% block body %}
+<style>
+    .form_div{
+            padding: 10px 10px;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        }
+    
+</style>
+
+    <div class="form_div">
+        {% if edit_patent %}
+        <form action="{% url 'edit_patent' edit_patent.id %}" method="post">
+            {% csrf_token%}
+        <h1> Edit Patent Published/Awarded {{edit_patent.patent_number}}</h1>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="details">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name of the Author(s)</label>
+                        <input type="text" class="form-control" required name="author_name" placeholder="Enter the Name of the Author(s)" value="{{edit_patent.author_name}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Category</label>
+                        <select name="category" id="" class="form-control">
+                            <option value="Published">Published</option>
+                            <option value="Awarded">Awarded</option>
+                        </select>
+                        {{edit_patent.category}}
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Patent Number</label>
+                        <input type="text" class="form-control" required name="patent_number" placeholder="Enter the registered patent number" value="{{edit_patent.patent_number}}">
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="details">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Title of the Patent</label>
+                        <textarea type="text" class="form-control" required name="patent_title" placeholder="Enter the Title of the Patent" rows="4">{{edit_patent.patent_title}}</textarea>
+                    </div>
+                    <div class="form-group" style="margin-top: 30px;">
+                        <label for="exampleInputEmail1">Date of Patent</label>
+                        <input type="date" class="form-control" required name="year_awarded" placeholder="Enter the registered patent number">
+                        {{edit_patent.patent_year}}
+                    </div>
+                </div>
+            </div>    
+        </div>
+            <div class="submit_button"  style="margin-top: 3%;padding: 3%;">
+                <center><button type="submit" class="btn btn-primary">Submit</button></center>
+            </div>
+        </form>
+        
+        {% else %}
+        
+        <form action="{% url 'patent_register'%}" method="post">
+            {% csrf_token%}
+        <h1>Patent Published/Awarded</h1>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="details">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name of the Author(s)</label>
+                        <input type="text" class="form-control" required name="author_name" placeholder="Enter the Name of the Author(s)">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Category</label>
+                        <select name="category" id="" class="form-control">
+                            <option value="Published">Published</option>
+                            <option value="Awarded">Awarded</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Patent Number</label>
+                        <input type="text" class="form-control" required name="patent_number" placeholder="Enter the registered patent number">
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="details">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Title of the Patent</label>
+                        <textarea type="text" class="form-control" required name="patent_title" placeholder="Enter the Title of the Patent" rows="4"></textarea>
+                    </div>
+                    <div class="form-group" style="margin-top: 30px;">
+                        <label for="exampleInputEmail1">Date of Patent</label>
+                        <input type="date" class="form-control" required name="year_awarded" placeholder="Enter the registered patent number">
+                    </div>
+                </div>
+            </div>    
+        </div>
+            <div class="submit_button"  style="margin-top: 3%;padding: 3%;">
+                <center><button type="submit" class="btn btn-primary">Submit</button></center>
+            </div>
+        </form>
+        {% endif %}
+    </div>
+
+{% endblock %}

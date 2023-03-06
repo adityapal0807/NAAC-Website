@@ -1,0 +1,140 @@
+{% extends 'website/layout.html' %}
+
+{% block body %}
+<script type="text/javascript">
+    function Change() {
+        var sci = document.getElementById("field");
+        var impact_factor = document.getElementById("data");
+        if (sci.value === 'registration_date'){
+            document.getElementById('data').type='date';
+        }
+        else if (sci.value === 'award_date'){
+            document.getElementById('data').type='date';
+        }
+        else{
+            document.getElementById('data').type='text';
+        }
+    }
+</script>
+<div class="container-fluid">
+    <h2>Ph.D's</h2>
+    <form class="form-inline my-2 my-lg-0" style="float: right;" method="post" action="{% url 'phd_display'%}">
+        {% csrf_token %}
+        <label for="form-control mr-sm-2" class="form-label mr-sm-2">Filter By - </label>
+        <select class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="field" id="field" onchange="Change()">
+            <option value="" selected disabled>Select a field</option>
+            <option value="scholor_name">Scholor Name</option>
+            <option value="department">Department</option>
+            <option value="guide_names">Guide Name(s)</option>
+            <option value="thesis_title">Thesis Title</option>
+            <option value="registration_date">Registration Date</option>
+            <option value="award_date">Award Date</option>     
+        </select>
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q" id="data">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+      <p>List of all the Ph.D's either Registered or Awarded</p>
+    <div class="table-responsive">  
+        {% if filter_field %}
+        {% if message %}
+            <p>No Records Available</p>
+            <a href="{% url 'phd_display'%}">Back to all Records</a>
+        {% else %} 
+        <h4>Filtered</h4>  
+        <div style="padding:2%;float: right;">
+            <a class="btn btn-outline-success" href="{% url 'phd_display'%}">Remove Filter</a>
+        </div>  
+        <p>Showing filtered results for <b>{{filter_field}}</b> matching with <b>{{filter_data}}</b></p>      
+        <table class="table table-hover" style="margin-top: 2%;">
+            <thead>
+                <tr>
+                    <th>Sr.No</th>
+                    {% if current_user.employee_code == 'admin' %}
+                        <th>Registered BY Employee Name</th>
+                    {% endif %}
+                    <th>Scholor Name</th>
+                    <th>Department</th>
+                    <th>Guide Name</th>
+                    <th>Thesis Title</th>
+                    <th>Registration Date</th>
+                    <th>Award Date</th>
+                    {% if current_user.employee_code != 'admin' %}
+                        <th>Edit or Delete</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                    {% for i,phd in filter_phds_list %}
+                        <tr>
+                            <td>{{i}}</td>
+                            {% if user.employee_code == 'admin' %}
+                                <td>{{phd.user.employee_name}}</td>
+                            {% endif %}
+                            <td>{{phd.scholor_name}}</td>
+                            <td>{{phd.department}}</td>
+                            <td>{{phd.guide_names}}</td>
+                            <td>{{phd.thesis_title}}</td>
+                            <td>{{phd.registration_date}}</td>
+                            <td>{{phd.award_date}}</td>
+                            {% if current_user.employee_code != 'admin' %}
+                            <td><a href="{% url 'edit_phd' phd.id %}">Edit</a>/<a href="{% url 'delete_phd' phd.id %}">Delete</a></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+        </table>
+            {% if current_user.employee_code == 'admin' %}
+            <form action="{% url 'phd_download'%}">
+                <button type="submit" name="filter_phd">Download Csv</button>
+            </form>
+            {% endif %}
+    {% endif %}
+        {% else %} 
+        <table class="table table-hover" style="margin-top: 2%;">
+            <thead>
+                <tr>
+                    <th>Sr.No</th>
+                    {% if current_user.employee_code == 'admin' %}
+                        <th>Registered BY Employee Name</th>
+                    {% endif %}
+                    <th>Scholor Name</th>
+                    <th>Department</th>
+                    <th>Guide Name</th>
+                    <th>Thesis Title</th>
+                    <th>Registration Date</th>
+                    <th>Award Date</th>
+                    {% if current_user.employee_code != 'admin' %}
+                        <th>Edit or Delete</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                    {% for i,phd in phds_list %}
+                        <tr>
+                            <td>{{i}}</td>
+                            {% if user.employee_code == 'admin' %}
+                                <td>{{phd.user.employee_name}}</td>
+                            {% endif %}
+                            <td>{{phd.scholor_name}}</td>
+                            <td>{{phd.department}}</td>
+                            <td>{{phd.guide_names}}</td>
+                            <td>{{phd.thesis_title}}</td>
+                            <td>{{phd.registration_date}}</td>
+                            <td>{{phd.award_date}}</td>
+                            {% if current_user.employee_code != 'admin' %}
+                            <td><a href="{% url 'edit_phd' phd.id %}">Edit</a>/<a href="{% url 'delete_phd' phd.id %}">Delete</a></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+        </table>
+            {% if current_user.employee_code == 'admin' %}
+            <form action="{% url 'phd_download'%}">
+                <button type="submit" name="phd">Download Csv</button>
+            </form>
+            {% endif %}
+        {% endif %} 
+    </div>
+</div>
+
+{% endblock%}
