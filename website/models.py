@@ -5,10 +5,10 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     employee_code = models.CharField(blank=True,null=True,max_length=50)
     employee_name = models.CharField(max_length=50,null=True)
-    
+    aadhar_number = models.CharField(max_length=12)
 
     def __str__(self):
-        return f"{self.employee_code} , {self.employee_name}"
+        return f"{self.employee_code} , {self.employee_name} , {self.aadhar_number}"
     
 
 class Personal_Detail(models.Model):

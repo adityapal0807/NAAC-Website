@@ -77,9 +77,9 @@ def profile(logged_user):
 
 def login_view(request):
     if request.method == "POST":
-        employee_id = request.POST["employee_id"]
+        aadhar = request.POST["aadhar"]
         password = request.POST["password"]
-        user = authenticate(request, username=employee_id, password=password)
+        user = authenticate(request, username=aadhar, password=password)
         
         # Check if authentication successful
         
@@ -105,6 +105,7 @@ def register_user(request):
         employer_name = request.POST["employer_name"]
         password = request.POST["password"]
         confirmation = request.POST["confirm_password"]
+        aadhar = request.POST['aadhar']
         
         if password != confirmation:
             return render(request,'website/register.html',{
@@ -112,9 +113,10 @@ def register_user(request):
             })
         
         try:
-            user = User.objects.create_user(username=employer_id, email=mail_id, password=password)
+            user = User.objects.create_user(username=aadhar, email=mail_id, password=password)
             user.employee_code = employer_id
             user.employee_name = employer_name
+            user.aadhar_number = aadhar
             
             user.save()
 
