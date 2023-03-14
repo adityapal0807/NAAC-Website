@@ -90,9 +90,26 @@ def login_view(request):
         else:
             return render(request, "website/login.html", {
                 "message": "Invalid username and/or password."
-            })
+            })  
+    else:
+        return render(request, "website/login.html")
+    
+def login_view(request):
+    if request.method == "POST":
+        aadhar = request.POST["aadhar"]
+        password = request.POST["password"]
+        user = authenticate(request, username=aadhar, password=password)
         
+        # Check if authentication successful
         
+        if user is not None:
+            login(request, user)
+            messages.success(request, 'You are now Logged In.')
+            return HttpResponseRedirect(reverse("index"))
+        else:
+            return render(request, "website/login.html", {
+                "message": "Invalid username and/or password."
+            })  
     else:
         return render(request, "website/login.html")
     
@@ -128,7 +145,7 @@ def register_user(request):
 
         except IntegrityError:
             return render(request, "website/register.html", {
-                "message": "Existing Username."
+                "message": "Existing User/AADHAR."
             })
 
     else:
