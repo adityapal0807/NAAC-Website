@@ -274,7 +274,9 @@ def personal_details(request):
                 'current_user' :current_user,
                 'date': current_date(),
                 'mor_eve' : get_time_of_day(),
-                'message': 'Enter data'
+                'message': 'Enter data',
+                'score':score,
+                'empty_list':empty_list,
             })
         
 @login_required(login_url=login_view)
@@ -670,6 +672,8 @@ def awards(request):
         award.year_awarded = year_awarded
         award.level = level
         award.save()
+        
+        messages.success(request, 'Award Registered Successfully')
 
         return HttpResponseRedirect(reverse(award_display))
     else:
@@ -702,6 +706,8 @@ def books(request):
         books.year_published = year_published
         books.affiliating_institute = affiliate_uni
         books.save()
+
+        messages.success(request, 'Book Registered Successfully')
 
         return HttpResponseRedirect(reverse(books_display))
     else:
@@ -740,6 +746,8 @@ def conference(request):
         books_conf.date = date
         books_conf.pp = pp
         books_conf.save()
+
+        messages.success(request, 'Proceeding Registered Successfully')
 
         return HttpResponseRedirect(reverse(conference_display))
     else:
