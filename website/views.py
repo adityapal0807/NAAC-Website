@@ -1726,7 +1726,7 @@ def phd_download(request):
         writer = csv.writer(response)
         writer.writerow(['Index', 'Scholor Name', 'Department', 'Guide Name(s)', 'Thesis Title', 'Registration Date', 'Award Date'])
         for index, row in df.iterrows():
-            writer.writerow([index+1,row['scholor_name'], row['department'], row['guide_names'], row['thesis_title'], row['registration_date'], row['award_date']])    
+            writer.writerow([index+1,row['scholor_name'], row['department'], row['guide_names'], row['thesis_title'], str(row['registration_date']).replace(' 00:00:00',''), str(row['award_date']).replace(' 00:00:00','')])    
 
         return response
     elif request.method == "GET" and 'filter_phd' in request.GET:
@@ -1741,7 +1741,7 @@ def phd_download(request):
         writer = csv.writer(response)
         writer.writerow(['Index', 'Scholor Name', 'Department', 'Guide Name(s)', 'Thesis Title', 'Registration Date', 'Award Date'])
         for index, row in df.iterrows():
-            writer.writerow([index+1,row['scholor_name'], row['department'], row['guide_names'], row['thesis_title'], row['registration_date'], row['award_date']]) 
+            writer.writerow([index+1,row['scholor_name'], row['department'], row['guide_names'], row['thesis_title'], str(row['registration_date']).replace(' 00:00:00',''), str(row['award_date']).replace(' 00:00:00','')]) 
 
         return response
     
@@ -1825,7 +1825,7 @@ def conference_download(request):
         writer = csv.writer(response)
         writer.writerow(['Index', 'Author Name(s)', 'Category', 'Title of Chapter/Paper', 'Title of Book/Conference', 'Type of Conference', 'Date', 'ISBN', 'Publisher', 'PP'])
         for index, row in df.iterrows():
-            writer.writerow([index+1,row['authors'], row['category'], row['title_chap_paper'], row['title_book_conf'], row['type_conf'], row['date'], row['isbn'], row['publisher'], row['pp']])    
+            writer.writerow([index+1,row['authors'], row['category'], row['title_chap_paper'], row['title_book_conf'], row['type_conf'], str(row['date']).replace(' 00:00:00',''), row['isbn'], row['publisher'], row['pp']])    
 
         return response
     elif request.method == "GET" and 'filter_conference' in request.GET:
