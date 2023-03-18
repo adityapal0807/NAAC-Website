@@ -1693,8 +1693,7 @@ def research_download(request):
         writer = csv.writer(response)
         writer.writerow(['Index', 'Title', 'Author Name(s)', 'Journal Name', 'Journal Website', 'ISSN','Publisher', 'Month Published', 'Year Published', 'Volume Number', 'Issue Number', 'PP', 'D.O.I', 'UGC Core', 'Scopus', 'SCI/SCIE/ESCI', 'Impact Factor'])
         for index, row in df.iterrows():
-            writer.writerow([index+1,row['scholor_name'], row['department'], row['guide_names'], row['thesis_title'], row['registration_date'], row['award_date'], row['month_published'], row['year_published'], row['volume_number'], row['issue_number'], row['pp'], row['doi'], row['ugc_core'], row['scopus'], row['sci_scie_esci'], row['impact_factor']])    
-
+            writer.writerow([index+1,row['title'], row['author_names'], row['journal_name'], row['journal_website'], row['issn'], row['publisher'], row['month_published'], row['year_published'], row['volume_number'], row['issue_number'], row['pp'], row['doi'], row['ugc_core'], row['scopus'], row['sci_scie_esci'], row['impact_factor']])
         return response
     elif request.method == "GET" and 'filter_research' in request.GET:
         filename = 'Filter_Research_Paper_Download.xlsx'
