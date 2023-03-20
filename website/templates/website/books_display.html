@@ -2,6 +2,13 @@
 
 {% block body %}
 
+<script>
+    function DeleteAlert() {
+      var myText = "Are you sure you want to Delete this item";
+      alert (myText);
+    }
+    </script>
+
 <div class="container-fluid">
     <h2>Books</h2>
     <form class="form-inline my-2 my-lg-0" style="float: right;" method="post" action="{% url 'books_display'%}">
@@ -63,7 +70,7 @@
                         <td>{{book.year_published}}</td>
                         <td>{{book.affiliating_institute}}</td>
                         {% if current_user.employee_code != 'admin' %}
-                            <td><a href="{% url 'edit_book' book.id %}">Edit</a>/<a href="{% url 'delete_book' book.id %}">Delete</a></td>
+                            <td><a href="{% url 'edit_book' book.id %}">Edit</a>/<a href="{% url 'delete_book' book.id %}" onclick="DeleteAlert()">Delete</a></td>
                         {% endif %}
                     </tr>
                 {% endfor %}
@@ -108,7 +115,7 @@
                             <td>{{book.year_published}}</td>
                             <td>{{book.affiliating_institute}}</td>
                             {% if current_user.employee_code != 'admin' %}
-                            <td><a href="{% url 'edit_book' book.id %}">Edit</a>/<a href="{% url 'delete_book' book.id %}">Delete</a></td>
+                            <td><a href="{% url 'edit_book' book.id %}">Edit</a>/<a href="{% url 'delete_book' book.id %}" onclick="DeleteAlert()">Delete</a></td>
                             {% endif %}
                         </tr>
                     {% endfor %}

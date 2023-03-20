@@ -2,6 +2,13 @@
 
 {% block body %}
 
+<script>
+    function DeleteAlert() {
+      var myText = "Are you sure you want to Delete this item";
+      alert (myText);
+    }
+    </script>
+
 <div class="container-fluid">
     <h2>Research Paper Publications</h2>
     <form class="form-inline my-2 my-lg-0" style="float: right;" method="post" action="{% url 'research_display'%}">
@@ -85,7 +92,7 @@
                             <td>{{paper.sci_scie_esci}}</td>
                             <td>{{paper.impact_factor}}</td>
                             {% if current_user.employee_code != 'admin' %}
-                            <td><a href="{% url 'edit_research' paper.id %}">Edit</a>/<a href="{% url 'delete_research' paper.id %}">Delete</a></td>
+                            <td><a href="{% url 'edit_research' paper.id %}">Edit</a>/<a href="{% url 'delete_research' paper.id %}" onclick="DeleteAlert()">Delete</a></td>
                             {% endif %}
                         </tr>
                     {% endfor %}
@@ -150,7 +157,7 @@
                             <td>{{paper.sci_scie_esci}}</td>
                             <td>{{paper.impact_factor}}</td>
                             {% if current_user.employee_code != 'admin' %}
-                            <td><a href="{% url 'edit_research' paper.id %}">Edit</a>/<a href="{% url 'delete_research' paper.id %}">Delete</a></td>
+                            <td><a href="{% url 'edit_research' paper.id %}">Edit</a>/<a href="{% url 'delete_research' paper.id %}" onclick="DeleteAlert()">Delete</a></td>
                             {% endif %}
                         </tr>
                     {% endfor %}

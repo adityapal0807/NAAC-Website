@@ -15,6 +15,13 @@
             document.getElementById('data').type='text';
         }
     }
+
+    
+    function DeleteAlert() {
+      var myText = "Are you sure you want to Delete this item";
+      alert (myText);
+    }
+    
 </script>
 <div class="container-fluid">
     <h2>Ph.D's</h2>
@@ -77,7 +84,7 @@
                             <td>{{phd.registration_date}}</td>
                             <td>{{phd.award_date}}</td>
                             {% if current_user.employee_code != 'admin' %}
-                            <td><a href="{% url 'edit_phd' phd.id %}">Edit</a>/<a href="{% url 'delete_phd' phd.id %}">Delete</a></td>
+                            <td><a href="{% url 'edit_phd' phd.id %}">Edit</a>/<a href="{% url 'delete_phd' phd.id %}" onclick="DeleteAlert()">Delete</a></td>
                             {% endif %}
                         </tr>
                     {% endfor %}
@@ -122,7 +129,7 @@
                             <td>{{phd.registration_date}}</td>
                             <td>{{phd.award_date}}</td>
                             {% if current_user.employee_code != 'admin' %}
-                            <td><a href="{% url 'edit_phd' phd.id %}">Edit</a>/<a href="{% url 'delete_phd' phd.id %}">Delete</a></td>
+                            <td><a href="{% url 'edit_phd' phd.id %}">Edit</a>/<a href="{% url 'delete_phd' phd.id %}" onclick="DeleteAlert()">Delete</a></td>
                             {% endif %}
                         </tr>
                     {% endfor %}
