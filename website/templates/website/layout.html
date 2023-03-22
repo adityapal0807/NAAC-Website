@@ -74,6 +74,10 @@
         }
       }
       
+      function Confirm(){
+        alert("Are you sure you want to change your password")
+      }
+
     </script>
     
 </head>
@@ -99,6 +103,13 @@
             {% endif %}
           </ul>
         </div>
+        {% if user.is_authenticated %}
+        {% if user.aadhar_number != 'admin' %}
+        <div style="text-align:right; margin:0px auto 0px auto;">
+          <a class="nav-link" href="{% url 'change_password' user.password_reset_token %}" onclick="Confirm()">Change Password</a>
+        </div>
+        {% endif %}
+        {% endif %}
       </nav>
     <div class="container-fluid">
         <div class="row">
@@ -110,6 +121,7 @@
                 <div style="text-align:right; margin:0px auto 0px auto;">
                   <p>Employee ID : {{current_user.employee_code}}</p>
                   <p>Name : {{current_user.employee_name}}</p>
+                  </p>
                 </div>
               </div>
               {% if user.employee_code != 'admin' %}
@@ -319,7 +331,9 @@
                   {% endfor %}
             {% endif %}
             {% block body %}
-            
+            <!--
+              Content Inside
+            -->
             {% endblock %}
           </div>
         </div>

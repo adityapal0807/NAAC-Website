@@ -6,6 +6,7 @@ class User(AbstractUser):
     employee_code = models.CharField(blank=True,null=True,max_length=50)
     employee_name = models.CharField(max_length=50,null=True)
     aadhar_number = models.CharField(max_length=12)
+    password_reset_token = models.CharField(max_length=100,null=True,blank=True)
 
     def __str__(self):
         return f"{self.employee_code} , {self.employee_name} , {self.aadhar_number}"

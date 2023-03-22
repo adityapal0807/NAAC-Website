@@ -1,4 +1,5 @@
 from django.urls import path
+from django.contrib.auth import views as auth_views #import this
 
 from . import views
 
@@ -53,6 +54,7 @@ urlpatterns = [
     path('Conference_Download',views.conference_download,name='conference_download'),
     
 
-
+    path('Forget_Password',views.forget_password,name='forget_password'),
+    path('Change_Password/<str:token>',views.change_password,name='change_password')
   
     ]

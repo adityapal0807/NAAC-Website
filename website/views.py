@@ -1841,3 +1841,64 @@ def conference_download(request):
         for index, row in df.iterrows():
             writer.writerow([index+1,row['authors'], row['category'], row['title_chap_paper'], row['title_book_conf'], row['type_conf'], row['date'], row['isbn'], row['publisher'], row['pp']])    
         return response
+
+
+
+from .helpers import forget_password_mail
+import uuid
+def forget_password(request):
+    if request.method == 'POST':
+        aadhar_number = request.POST['aadhar']
+
+        user_obj = User.objects.filter(aadhar_number = aadhar_number).get()
+        if user_obj is None:
+            messages.warning(request, 'No user found')
+            return HttpResponseRedirect(forget_password)
+        
+        token = str(uuid.uuid4())
+        user_obj.password_reset_token = token
+        user_obj.save()
+        forget_password_mail(user_obj.email,token)
+
+
+        return render(request,'website/success.html',{
+            'heading' : 'Mail Sent Successfully',
+            'message' : 'A password reset mail has been sent to the email id linked to your account. Remember this mail can be used only once.',
+        })
+
+    else:
+        return render(request,'website/forget_password.html')
+
+
+def change_password(request,token):
+    if request.method == 'POST':
+        new_password = request.POST['new_password']
+        confirm_password = request.POST['confirm_password']
+        aadhar = request.POST['aadhar']
+
+        user_id = User.objects.filter(password_reset_token = token).get()
+
+        if user_id is None:
+            messages.warning('No user id given')
+            return HttpResponseRedirect(f'change_password/{token}/')
+        
+        if new_password != confirm_password:
+            messages.warning("Passwords don't match ")
+            return HttpResponseRedirect(f'change_password/{token}/')
+        
+        user_obj = User.objects.filter(aadhar_number = aadhar).get()
+        user_obj.set_password(new_password)
+        user_obj.save()
+
+        return render(request,'website/success.html',{
+            'heading':'Password Changed Successfully',
+            'message':f'Hi {user_obj.employee_name},\n Aadhar Number {user_obj.aadhar_number},\n Your Password has been reset successfully.',
+            'user' : user_obj
+        })
+    else:
+        user_id = User.objects.filter(password_reset_token = token).get()
+        return render(request,'website/password_change.html',
+            {
+                'token':token,
+                'user_obj':user_id
+            })
