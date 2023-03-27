@@ -1858,7 +1858,7 @@ def forget_password(request):
         token = str(uuid.uuid4())
         user_obj.password_reset_token = token
         user_obj.save()
-        forget_password_mail(user_obj.email,token)
+        forget_password_mail(user_obj.email,token,user_obj.employee_name)
 
 
         return render(request,'website/success.html',{

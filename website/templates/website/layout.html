@@ -96,20 +96,23 @@
             <li class="nav-item active">
               <a class="nav-link" href="{% url 'index'%}">Home <span class="sr-only">(current)</span></a>
             </li>
-            {% if user.is_authenticated %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'logout_view' %}">Logout</a>
-            </li>
-            {% endif %}
           </ul>
+          <span class="navbar-text">
+            {% if user.aadhar_number != 'admin' %}
+            <div>
+              <a class="nav-link" href="{% url 'change_password' user.password_reset_token %}" onclick="Confirm()">Change Password</a>
+            </div>
+            {% endif %}
+          </span>
+          <span class="navbar-text">
+            {% if user.is_authenticated %}
+            <div>
+              <a class="nav-link" href="{% url 'logout_view' %}">Logout</a>
+            </div>
+            {% endif %}
+          </span>
+          
         </div>
-        {% if user.is_authenticated %}
-        {% if user.aadhar_number != 'admin' %}
-        <div style="text-align:right; margin:0px auto 0px auto;">
-          <a class="nav-link" href="{% url 'change_password' user.password_reset_token %}" onclick="Confirm()">Change Password</a>
-        </div>
-        {% endif %}
-        {% endif %}
       </nav>
     <div class="container-fluid">
         <div class="row">
@@ -135,8 +138,8 @@
                   </div>
                 </div>
                 {% if score == 100 %}
-                <button class="btn btn-primary" id="profile" onclick="ShowProfile()">View Profile</button>
-                <div class="card_profile_div" style="padding: 2%;display: none;" id="profile_drop_div" >
+                <button class="btn btn-primary" id="profile" onclick="ShowProfile()" style="padding-bottom: 2%;">View Profile</button>
+                <div class="card_profile_div" style="padding: 2%;display: none;margin-top: 1%;" id="profile_drop_div" >
                   <div class="row">
                     <div class="col-md-6">
                       {% if 'personal' in empty_list %}
