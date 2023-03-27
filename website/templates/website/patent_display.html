@@ -76,7 +76,7 @@
         </table>
             {% if current_user.employee_code == 'admin' %}
             <form action="{% url 'patent_download'%}">
-                <button href="#" type="submit" name="filter_patent">Download Csv</button>
+                <button href="#" type="submit" name="filter_patent" class="btn btn-outline-success">Download Csv</button>
             </form>
             {% endif %}
         {% endif %}
@@ -123,7 +123,7 @@
         
         {% if current_user.employee_code == 'admin' %}
         <form action="{% url 'patent_download'%}">
-            <button href="#" type="submit" name="patent">Download Csv</button>
+            <button href="#" type="submit" name="patent" class="btn btn-outline-success">Download Csv</button>
         </form>
         {% endif %}
         

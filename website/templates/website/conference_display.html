@@ -104,7 +104,7 @@
         </table>
             {% if current_user.employee_code == 'admin' %}
                 <form action="{% url 'conference_download'%}">
-                    <button type="submit" name="filter_conference">Download Csv</button>
+                    <button type="submit" name="filter_conference" class="btn btn-outline-success">Download Csv</button>
                 </form>
                 {% endif %}
         {% endif %}
@@ -155,7 +155,7 @@
         </table>
         {% if current_user.employee_code == 'admin' %}
             <form action="{% url 'conference_download'%}">
-                <button type="submit" name="conference">Download Csv</button>
+                <button type="submit" name="conference" class="btn btn-outline-success">Download Csv</button>
             </form>
             {% endif %}
         {% endif %} 
